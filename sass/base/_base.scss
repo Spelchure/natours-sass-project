@@ -1,0 +1,57 @@
+/* Select all elements */
+* *::after *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; /* all elements will inherit box-sizing from body. */
+}
+
+/*
+
+If we use unit rem breakpoints can easily 
+change root font size and corresponding
+padding, margins see line 23
+
+*/
+
+/*
+We are changing default font size    
+*/
+html {
+  font-size: 62.5%; /* 1 rem equals to 16px so after this 1 rem equals to 10px */
+
+  /*
+    from bigger to lower
+    change root font size and all rem units.
+  */
+  @include respond(tab-land) {
+    // width <= 900
+    font-size: 56.25%; // 1 rem = 9px, 9/16 = 56.25%;
+  }
+  @include respond(tab-port) {
+    // width <= 600
+    font-size: 50%; /// 1 rem = 8px, 8/16 = 50%;
+  }
+  @include respond(big-desktop) {
+    font-size: 75%; // 1 rem = 12, 12/16 = 75%
+  }
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #777;
+  padding: 3rem;
+  box-sizing: border-box; /* box model changed, padding not included */
+
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
+
+/* change text selection */
+::selection {
+  background-color: $color-primary;
+  color: $white;
+}

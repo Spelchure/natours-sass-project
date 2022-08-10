@@ -1,0 +1,67 @@
+@mixin clearfix {
+  &::after {
+    content: ""; // if we cannot set, element will not be shown.
+    display: table;
+    clear: both; // clear both float left & float right
+  }
+}
+
+@mixin abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+0- 600px: Phone
+600-900px: Tablet portrait
+600-1200px: Tablet landscape
+[1200px-1800] : Normal style(desktop first)
+1800px + : Big Desktop
+*/
+
+@mixin respond-phone {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+/*
+remler bozulabilir ve her tarayıcıda kullanılmaz 
+REM unit can decay and all browsers don't support.
+So we are using EM unit.
+1 em equals 16px as standard
+
+Make your site responsive in following order: 
+
+base + typography > general layout + grid > page layout > components
+
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    /* they only applied to screens i.e. if someone wants to print page
+        media queries will not apply. */
+    @media only screen and (max-width: 37.5em) {
+      // 600
+      @content;
+    }
+  } @else if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      // 900
+      @content;
+    }
+  } @else if $breakpoint == tab-land {
+    //1200
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  } @else if $breakpoint == big-desktop {
+    // 1800
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    }
+  } @else {
+    @error "Invalid Breakpoint.";
+  }
+}
